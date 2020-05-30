@@ -13,10 +13,6 @@
 
 Route::group(['middleware' => ['web']], function() {
 
-    Route::group(['prefix' => 'admin'], function () {
-        Voyager::routes();
-    });
-
     // Homepage
     Route::get('/', 'HomeController@index')->name('welcome');
 
