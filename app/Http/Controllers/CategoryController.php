@@ -11,7 +11,9 @@ class CategoryController extends Controller
     public function showCategoryProducts()
     {
         $categories = Category::all();
-        $products = Product::where('category_id', request()->id)->latest()->paginate(9);
+        $products = Product::where('category_id', request()->id)
+                    ->latest()
+                    ->paginate(9);
 
         return view('shop.index')->with([
                 'categories'    => $categories,
@@ -22,11 +24,13 @@ class CategoryController extends Controller
     public  function showCates($category)
     {
         $categories = Category::all();
-        $products = Product::with('categories')->whereHas('categories', function ($query) use ($category)
+        $products = Product::with('categories')
+                    ->whereHas('categories', function ($query) use ($category)
         {
             $query->where('slug', $category);
         })->inRandomOrder()->paginate(9);
 
-        return view('shop.index')->with('products', $products)->with('categories', $categories);
+        return view('shop.index')->with('products', $products)
+                ->with('categories', $categories);
     }
 }

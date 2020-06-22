@@ -28,9 +28,13 @@ class AdController extends Controller
         $admin = Auth::user();
 
         $categories = Category::all();
-        $ads = Product::where('admin_id', $admin->id)->orderBy('created_at', 'desc')->paginate(6);
+        $ads = Product::where('admin_id', $admin->id)
+               ->orderBy('created_at', 'desc')
+               ->paginate(6);
 
-        return view('merchant.ad.index')->with('categories', $categories)->with('ads', $ads);
+        return view('merchant.ad.index')
+                    ->with('categories', $categories)
+                    ->with('ads', $ads);
     }
 
     /**
@@ -42,7 +46,8 @@ class AdController extends Controller
     {
         $categories = Category::all();
 
-        return view('merchant.ad.create')->with('categories', $categories);
+        return view('merchant.ad.create')
+                    ->with('categories', $categories);
     }
 
     /**
@@ -110,7 +115,10 @@ class AdController extends Controller
         $categories = Category::all();
         $ad_category = Category::find($ad->category_id);
 
-        return view('merchant.ad.edit')->with('ad', $ad)->with('categories', $categories)->with('ad_category', $ad_category);
+        return view('merchant.ad.edit')
+                    ->with('ad', $ad)
+                    ->with('categories', $categories)
+                    ->with('ad_category', $ad_category);
     }
 
     /**
@@ -124,7 +132,11 @@ class AdController extends Controller
     {
         $ad = Product::find($id);
 
-        if ($ad->slug == request('slug') || $ad->admin_id == request('admin_id') || $ad->price == request('price') || $ad->image == request('image')) {
+        if ($ad->slug == request('slug') || 
+            $ad->admin_id == request('admin_id') || 
+            $ad->price == request('price') || 
+            $ad->image == request('image')) 
+            {
 
             $this->validate($request, [
                 'name'          =>  'required|string',

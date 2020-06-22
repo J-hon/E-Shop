@@ -41,7 +41,8 @@ class CartController extends Controller
 
             session()->put('cart', $cart);
 
-            return redirect()->back()->with('success', 'Product added to cart successfully!');
+            return redirect()->back()
+                ->with('success', 'Product added to cart successfully!');
         }
 
         // if cart not empty then check if this product exist then increment quantity
@@ -50,7 +51,8 @@ class CartController extends Controller
 
             session()->put('cart', $cart);
 
-            return redirect()->back()->with('success', 'Product added to cart successfully!');
+            return redirect()->back()
+                ->with('success', 'Product added to cart successfully!');
 
         }
 
@@ -63,7 +65,8 @@ class CartController extends Controller
         ];
 
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        return redirect()->back()
+            ->with('success', 'Product added to cart successfully!');
     }
 
     public function update(Request $request)

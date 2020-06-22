@@ -84,7 +84,9 @@ class AdminProfileController extends Controller
     {
         $admin = Auth::user();
 
-        if ($admin->email == request('email') || $admin->password == request('password')) {
+        if ($admin->email == request('email') || 
+            $admin->password == request('password')) 
+        {
 
             $this->validate(request(), [
                 'name'          =>  'required|string',
@@ -119,23 +121,6 @@ class AdminProfileController extends Controller
         return redirect()->route('profile');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $admin = Admin::find($id);
-
-        Auth::logout();
-
-        if ($admin->delete()) {
-            return redirect()->route('welcome')->with('global', 'Your account has been successfully deactivated!');
-        }
-    }
-
     public function updatePassword(Request $request) {
         if (!(Hash::check($request->get('old_password'), Auth::user()->password))) {
             // The passwords don't not match
@@ -144,14 +129,18 @@ class AdminProfileController extends Controller
             return response()->json(['errors' => ['current' => ['Current password does not match']]], 422);
         }
 
-        if (strcmp($request->get('old_password'), $request->get('new_password')) == 0) {
+        if (strcmp($request->get('old_password'), 
+            $request->get('new_password')) == 0) 
+        {
             //Current password and new password are same
             //return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
 
             return response()->json(['errors' => ['current' => ['New Password cannot be same as your current password']]], 422);
         }
 
-        if (strcmp($request->get('new_password'), $request->get('password_confirmation')) !== 0) {
+        if (strcmp($request->get('new_password'), 
+            $request->get('password_confirmation')) !== 0) 
+        {
             //Current password and new password are same
             //return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
 
@@ -171,5 +160,23 @@ class AdminProfileController extends Controller
 
         Session::flash('success', 'Password changed!');
         return redirect()->route('profile');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $admin = Admin::find($id);
+
+        Auth::logout();
+
+        if ($admin->delete()) {
+            return redirect()->route('welcome')
+                ->with('global', 'Your account has been successfully deactivated!');
+        }
     }
 }

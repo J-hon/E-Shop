@@ -21,10 +21,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $prods = Product::latest()->take(6)->get();
-        $products = Product::inRandomOrder()->take(8)->get();
-        $categories = Category::inRandomOrder()->take(6)->get();
+        $prods = Product::latest()
+                        ->take(6)
+                        ->get();
+        $products = Product::inRandomOrder()
+                            ->take(8)
+                            ->get();
+        $categories = Category::inRandomOrder()
+                                ->take(6)
+                                ->get();
 
-        return view('pages.welcome')->with('prods', $prods)->with('products', $products)->with('categories', $categories);
+        return view('pages.welcome')->with('prods', $prods)
+                                    ->with('products', $products)
+                                    ->with('categories', $categories);
     }
 }

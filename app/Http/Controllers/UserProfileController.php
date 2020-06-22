@@ -84,7 +84,9 @@ class UserProfileController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->email == request('email') || $user->password == request('password')) {
+        if ($user->email == request('email') 
+            || $user->password == request('password')) 
+        {
 
             $this->validate(request(), [
                 'name'          =>  'required|string',
@@ -133,7 +135,8 @@ class UserProfileController extends Controller
         Auth::logout();
 
         if ($admin->delete()) {
-            return redirect()->route('welcome')->with('global', 'Your account has been successfully deactivated!');
+            return redirect()->route('welcome')
+                ->with('global', 'Your account has been successfully deactivated!');
         }
     }
 
@@ -145,14 +148,18 @@ class UserProfileController extends Controller
             return response()->json(['errors' => ['current' => ['Current password does not match']]], 422);
         }
 
-        if (strcmp($request->get('old_password'), $request->get('new_password')) == 0) {
+        if (strcmp($request->get('old_password'), 
+            $request->get('new_password')) == 0) 
+        {
             //Current password and new password are same
             //return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
 
             return response()->json(['errors' => ['current' => ['New Password cannot be same as your current password']]], 422);
         }
 
-        if (strcmp($request->get('new_password'), $request->get('password_confirmation')) !== 0) {
+        if (strcmp($request->get('new_password'), 
+            $request->get('password_confirmation')) !== 0) 
+        {
             //Current password and new password are same
             //return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
 
